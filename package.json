@@ -1,0 +1,32 @@
+{
+  "name": "pong-test",
+  "version": "1.0.0",
+  "description": "Kleine Test Seite mit dem Spiel Pong",
+  "main": "index.js",
+  "scripts": {
+    "clean": "node scripts/clean.js",
+    "build": "npm run clean && parcel build src/*.html --public-url . --detailed-report --experimental-scope-hoisting",
+    "watch": "npm run clean && parcel watch src/*.html --public-url . --detailed-report --experimental-scope-hoisting",
+    "start": "parcel src/index.html --open",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DerStimmler/pong-test.git"
+  },
+  "keywords": [
+    "Pong",
+    "Game",
+    "Test"
+  ],
+  "author": "DerStimmler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DerStimmler/pong-test/issues"
+  },
+  "homepage": "https://github.com/DerStimmler/pong-test#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.10.3",
+    "shelljs": "^0.8.3"
+  }
+}
