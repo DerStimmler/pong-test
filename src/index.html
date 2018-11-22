@@ -1,21 +1,30 @@
 <html>
-    <head>
-        <title>Pong Test</title>
-        <script src="index.js"></script>
-    </head>
-    <body>
-        <header>
-                <span>P</span>
-                <span>O</span>
-                <span>N</span>
-                <span>G</span>
-                <span> </span>
-                <span>T</span>
-                <span>E</span>
-                <span>S</span>
-                <span>T</span>
-        </header>
-        <canvas id="game_canvas" width="700" height="500"></canvas>
+  <head>
+    <title>Pong Test</title>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <header>
+      <span>P</span> <span>O</span> <span>N</span> <span>G</span>
+      <span> </span> <span>T</span> <span>E</span> <span>S</span> <span>T</span>
+    </header>
+    <main>
+      <div id="options">
+          <h3>Controls</h3>
+            &#x1f844; left arrow <br>
+            &#x1f846; right arrow <br>
+            &#x1f5b0; Mouseclick toggles Mousemode
+          <h3>Options</h3>
+          <p>Paddle width</p> <input type="number" id="paddle_width" min="1" max="700" value="80" step="10"><br>
+          <p>Paddle Speed</p> <input type="number" id="paddle_speed" min="0.1" value="7"><br>
+          <p>Paddle Color</p>
 
-    </body>
+      </div>
+      <canvas id="game_canvas" width="700" height="500"></canvas>
+      <div id="score">
+          Score
+      </div>
+    </main>
+    <footer></footer>
+  </body>
 </html>

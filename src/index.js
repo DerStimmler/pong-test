@@ -19,9 +19,9 @@ window.addEventListener("load", () => {
   var paddleHeight = 10;
   var paddleWidth = 80;
   var paddleX = canvas.width / 2 - paddleWidth / 2;
-  //var paddleY = canvas.height - paddleHeight;
   var paddleY = canvas.height - paddleHeight - 30;
   var paddleDx = 7;
+  var paddleColor = "red";
 
   var rightPressed;
   var leftPressed;
@@ -30,6 +30,7 @@ window.addEventListener("load", () => {
   var mouseMode = false;
 
   var count = 0;
+  var bgameOver = false;
 
   document.addEventListener("keydown", keyDownHandler, false);
   document.addEventListener("keyup", keyUpHandler, false);
@@ -42,16 +43,24 @@ window.addEventListener("load", () => {
     false
   );
   canvas.addEventListener("click", () => {
-    if(mouseMode === false){
-    mouseMode = true;
-    canvas.classList.add("mouseMode");
-    }
-    else{
+    if (mouseMode === false) {
+      mouseMode = true;
+      canvas.classList.add("mouseMode");
+    } else {
       mouseMode = false;
       canvas.classList.remove("mouseMode");
     }
-
   });
+  /*
+  let inputPaddleWith = document.getElementById("paddle_width");
+  inputPaddleWith.addEventListener('change', () => {
+    paddleWidth = inputPaddleWith.value;
+  });
+  let inputPaddleSpeed = document.getElementById("paddle_speed");
+  inputPaddleSpeed.addEventListener('change', () => {
+    paddleDx = inputPaddleSpeed.value;
+  });
+  */
 
   function getMousePos(canvas, event) {
     let rect = canvas.getBoundingClientRect();
@@ -73,6 +82,28 @@ window.addEventListener("load", () => {
     }
   }
 
+  function gameOver() {
+    bgameOver = true;
+    count = "Game Over";
+    drawCount();
+    x = canvas.width / 2;
+    y = canvas.height - canvas.height / 4;
+    dx = 0;
+    dy = 0;
+    br = 0;
+    bg = 255;
+    bb = 0;
+
+    paddleX = canvas.width / 2 - paddleWidth / 2;
+    paddleY = canvas.height - paddleHeight - 30;
+    setTimeout(() => {
+      count = 0;
+      dx = 2;
+      dy = -2;
+      bgameOver = false;
+    }, 3000);
+  }
+
   function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
@@ -84,14 +115,18 @@ window.addEventListener("load", () => {
   function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = paddleColor;
     ctx.fill();
     ctx.closePath();
   }
 
   function drawCount() {
     ctx.beginPath();
-    ctx.font = "150px Arial";
+    if (bgameOver === true) {
+      ctx.font = "100px Arial";
+    } else {
+      ctx.font = "150px Arial";
+    }
     ctx.textAlign = "center";
     ctx.strokeText(count.toString(), canvas.width / 2, canvas.height / 2);
     ctx.closePath();
@@ -108,7 +143,7 @@ window.addEventListener("load", () => {
     } else if (y + dy > canvas.height) {
       y = -20; //Ball verschwinden lassen
       x = -20; //Ball verschwinden lassen
-      alert("Game Over!", location.reload());
+      gameOver();
     }
 
     //Paddle Movement
@@ -170,7 +205,7 @@ window.addEventListener("load", () => {
 
     drawBall();
     drawPaddle();
-    drawCount();
+    drawCount(150);
 
     x += dx;
     y += dy;
