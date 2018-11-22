@@ -19,17 +19,44 @@ window.addEventListener("load", () => {
   var paddleHeight = 10;
   var paddleWidth = 80;
   var paddleX = canvas.width / 2 - paddleWidth / 2;
-  var paddleY = canvas.height - paddleHeight;
+  //var paddleY = canvas.height - paddleHeight;
+  var paddleY = canvas.height - paddleHeight - 30;
   var paddleDx = 7;
 
   var rightPressed;
   var leftPressed;
 
+  var mouseX;
+  var mouseMode = false;
+
   var count = 0;
 
   document.addEventListener("keydown", keyDownHandler, false);
   document.addEventListener("keyup", keyUpHandler, false);
+  canvas.addEventListener(
+    "mousemove",
+    event => {
+      mouseX = getMousePos(canvas, event);
+      console.log(mouseX);
+    },
+    false
+  );
+  canvas.addEventListener("click", () => {
+    if(mouseMode === false){
+    mouseMode = true;
+    canvas.classList.add("mouseMode");
+    }
+    else{
+      mouseMode = false;
+      canvas.classList.remove("mouseMode");
+    }
 
+  });
+
+  function getMousePos(canvas, event) {
+    let rect = canvas.getBoundingClientRect();
+    return event.clientX - rect.left;
+  }
   function keyDownHandler(event) {
     if (event.keyCode == 39) {
       rightPressed = true;
@@ -79,14 +106,26 @@ window.addEventListener("load", () => {
     } else if (y + dy < ballRadius) {
       dy = -dy;
     } else if (y + dy > canvas.height) {
+      y = -20; //Ball verschwinden lassen
+      x = -20; //Ball verschwinden lassen
       alert("Game Over!", location.reload());
     }
 
     //Paddle Movement
+
+    //Tasten
     if (rightPressed && paddleX + paddleWidth < canvas.width) {
       paddleX += paddleDx;
     } else if (leftPressed && paddleX > 0) {
       paddleX -= paddleDx;
+    }
+    //Maus
+    if (mouseMode === true) {
+      if (mouseX < paddleWidth / 2 || mouseX > canvas.width - paddleWidth / 2) {
+        //Paddle stoppen
+      } else {
+        paddleX = mouseX - paddleWidth / 2;
+      }
     }
 
     //Paddle Ball Collision

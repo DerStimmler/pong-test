@@ -22,6 +22,10 @@ header {
   box-shadow: 0 0 30px grey;
 }
 
+.mouseMode {
+  cursor: none;
+}
+
 ::-moz-selection {
   background: #009688;
   color: #000;
