@@ -19,10 +19,20 @@ main {
   width: 100%;
 }
 
+
+main > div {
+  flex-grow: 1;
+  padding-left: 1em;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 #options {
-  flex-grow: 100;
-  padding: 1em;
-  display: none; /*Hier rausnehmen!-------------------------------------*/
+  display: none; /*-------------löschen---------------------*/
+}
+
+#options > h3, #controls > h3{
+  text-align: center;
+  text-decoration: underline;
 }
 
 #options > p {
@@ -38,15 +48,44 @@ main {
   padding-right: 0;
   margin-left: auto;
   margin-right: auto;
-  display: block;
 
   box-shadow: 0 0 30px grey;
 }
 
 #score {
-  flex-grow: 100;
-  padding: 1em;
-  display: none; /*Hier rausnehmen!-------------------------------------*/
+  flex-grow: 1;
+}
+
+#score > h3 {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+  text-decoration: underline;
+}
+
+#score_board {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+
+#score_board_table{
+  text-align: center;
+  margin: 0 auto;
+}
+
+#score_board .highscore {
+  color: red;
+}
+
+#score_board .border_left {
+  border-left: solid black 1px;
+}
+
+#score_board .score {
+  font-weight: bold;
+}
+
+#score_board .tries {
+  color: grey;
 }
 
 .mouseMode {

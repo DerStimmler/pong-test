@@ -9,8 +9,8 @@ window.addEventListener("load", () => {
   var x = canvas.width / 2;
   var y = canvas.height - canvas.height / 4;
   var ballRadius = 10;
-  var dx = 2;
-  var dy = -2;
+  var dx = 10;
+  var dy = -10;
   var br = 0;
   var bg = 255;
   var bb = 0;
@@ -31,6 +31,9 @@ window.addEventListener("load", () => {
 
   var count = 0;
   var bgameOver = false;
+
+  var scores = [];
+  var highscore = -1;
 
   document.addEventListener("keydown", keyDownHandler, false);
   document.addEventListener("keyup", keyUpHandler, false);
@@ -84,6 +87,11 @@ window.addEventListener("load", () => {
 
   function gameOver() {
     bgameOver = true;
+    scores.push(count);
+    if(count > highscore){
+      highscore = count;
+    }
+    drawScore();
     count = "Game Over";
     drawCount();
     x = canvas.width / 2;
@@ -98,10 +106,10 @@ window.addEventListener("load", () => {
     paddleY = canvas.height - paddleHeight - 30;
     setTimeout(() => {
       count = 0;
-      dx = 2;
-      dy = -2;
+      dx = 10;
+      dy = -10;
       bgameOver = false;
-    }, 3000);
+    }, 30);
   }
 
   function drawBall() {
@@ -130,6 +138,40 @@ window.addEventListener("load", () => {
     ctx.textAlign = "center";
     ctx.strokeText(count.toString(), canvas.width / 2, canvas.height / 2);
     ctx.closePath();
+  }
+
+  function drawScore() {
+    console.log("-----------------");
+    let tries = scores.length;
+    let score_board_table = document.getElementById("score_board_table");
+    score_board_table.innerHTML = "";
+    for(let i = 0; i < Math.ceil(scores.length/10); i++){
+    let score_board_col = document.createElement("td");
+    score_board_col.setAttribute("id",i)
+    if(i>0){
+      score_board_col.classList.add("border_left");
+    }
+    score_board_table.appendChild(score_board_col);
+    }
+    scores.reverse();
+    for(let i = 0; i < scores.length; i++){
+      let score_item = document.createElement("tr");
+      let score_item_try = document.createElement("td")
+      score_item_try.classList.add("tries");
+      score_item_try.innerHTML = tries + ": ";
+      score_item.appendChild(score_item_try);
+      let score_item_score = document.createElement("td");
+      score_item_score.classList.add("score");
+      score_item_score.innerHTML = scores[i];
+      if(scores[i] == highscore){
+        score_item.classList.add("highscore");
+      }
+      score_item.appendChild(score_item_score);
+      console.log("Spalten ID: " + parseInt(i / 10, 10) * 10 /10);
+      document.getElementById(parseInt(i / 10, 10) * 10/10).appendChild(score_item);
+      tries --;
+    }
+    scores.reverse();
   }
 
   function draw() {
