@@ -9,8 +9,8 @@ window.addEventListener("load", () => {
   var x = canvas.width / 2;
   var y = canvas.height - canvas.height / 4;
   var ballRadius = 10;
-  var dx = 10;
-  var dy = -10;
+  var dx = 2;
+  var dy = -2;
   var br = 0;
   var bg = 255;
   var bb = 0;
@@ -87,7 +87,7 @@ window.addEventListener("load", () => {
 
   function gameOver() {
     bgameOver = true;
-    scores.push(count);
+    scores.unshift(count);
     if(count > highscore){
       highscore = count;
     }
@@ -106,8 +106,8 @@ window.addEventListener("load", () => {
     paddleY = canvas.height - paddleHeight - 30;
     setTimeout(() => {
       count = 0;
-      dx = 10;
-      dy = -10;
+      dx = 2;
+      dy = -2;
       bgameOver = false;
     }, 30);
   }
@@ -145,6 +145,7 @@ window.addEventListener("load", () => {
     let tries = scores.length;
     let score_board_table = document.getElementById("score_board_table");
     score_board_table.innerHTML = "";
+    //Create cols
     for(let i = 0; i < Math.ceil(scores.length/10); i++){
     let score_board_col = document.createElement("td");
     score_board_col.setAttribute("id",i)
@@ -153,7 +154,7 @@ window.addEventListener("load", () => {
     }
     score_board_table.appendChild(score_board_col);
     }
-    scores.reverse();
+    //fill cols
     for(let i = 0; i < scores.length; i++){
       let score_item = document.createElement("tr");
       let score_item_try = document.createElement("td")
@@ -171,7 +172,6 @@ window.addEventListener("load", () => {
       document.getElementById(parseInt(i / 10, 10) * 10/10).appendChild(score_item);
       tries --;
     }
-    scores.reverse();
   }
 
   function draw() {
